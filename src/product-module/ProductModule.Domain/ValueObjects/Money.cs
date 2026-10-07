@@ -13,6 +13,9 @@ public record Money
 
     public Money Create(decimal value, string currency)
     {
-        return new Money(decimal.Round(value, 2, MidpointRounding.AwayFromZero), currency);
+        if (currency.Length != 3)
+            throw new Exception();
+
+        return new Money(decimal.Round(value, 2, MidpointRounding.AwayFromZero), currency.ToUpper());
     }
 }

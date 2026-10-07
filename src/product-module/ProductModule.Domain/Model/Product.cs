@@ -37,6 +37,47 @@ public class Product
         return new Product(name, description, price, stock);
     } 
 
+    public void SetName(string name)
+    {
+        if (!ValidateName(name))
+            throw new Exception();
+
+        Name = name;
+        Update();
+    }
+    public void SetPrice(Money price)
+    {
+        if (!ValidatePrice(price))
+            throw new Exception();
+
+        Price = price;
+        Update();
+    }
+    public void SetStock(int stock)
+    {
+        if (!ValidateStock(stock))
+            throw new Exception();
+
+        Stock = stock;
+        Update();
+    }
+    public void SubtractStock(int toSubtract)
+    {
+        if (toSubtract <= 0 || toSubtract > Stock)
+            throw new Exception(); // debetable exception
+
+        Stock -= toSubtract;
+        Update();
+    }
+    public void AddStock(int toAdd)
+    {
+        if (toAdd <= 0)
+            throw new Exception();
+
+        Stock += toAdd;
+        Update();
+    }
+
     private static bool ValidateName(string name)
     {
         if (string.IsNullOrWhiteSpace(name) || name.Length > 256)
@@ -53,10 +94,7 @@ public class Product
     }
     private static bool ValidateStock(int stock)
     {
-        if (stock < 0)
-            return false;
-
-        return true;
+        return stock < 0;
     }
     private void Update()
     {
