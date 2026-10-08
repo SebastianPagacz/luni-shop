@@ -1,3 +1,4 @@
+using ProductModule.Domain.Exceptions;
 using ProductModule.Domain.ValueObjects;
 
 namespace ProductModule.Domain.Model;
@@ -25,46 +26,35 @@ public class Product
 
     public static Product Create(string name, string? description, Money price, int stock)
     {
-        if (!ValidateName(name))
-            throw new Exception();
-        
-        if (!ValidatePrice(price))
-            throw new Exception();
-
-        if (!ValidateStock(stock))
-            throw new Exception();
+        ValidateName(name);
+        ValidatePrice(price);
+        ValidateStock(stock);
 
         return new Product(name, description, price, stock);
     } 
 
     public void SetName(string name)
     {
-        if (!ValidateName(name))
-            throw new Exception();
-
+        ValidateName(name);
         Name = name;
         Update();
     }
     public void SetPrice(Money price)
     {
-        if (!ValidatePrice(price))
-            throw new Exception();
-
+        ValidatePrice(price);
         Price = price;
         Update();
     }
     public void SetStock(int stock)
     {
-        if (!ValidateStock(stock))
-            throw new Exception();
-
+        ValidateStock(stock);
         Stock = stock;
         Update();
     }
     public void SubtractStock(int toSubtract)
     {
         if (toSubtract <= 0 || toSubtract > Stock)
-            throw new Exception(); // debetable exception
+            throw new DomainException("Can't subtract negative value and to subtract can't exceed the target value."); // debetable DomainException
 
         Stock -= toSubtract;
         Update();
@@ -72,7 +62,7 @@ public class Product
     public void AddStock(int toAdd)
     {
         if (toAdd <= 0)
-            throw new Exception();
+            throw new DomainException("Can't add negative value.");
 
         Stock += toAdd;
         Update();
@@ -81,20 +71,23 @@ public class Product
     private static bool ValidateName(string name)
     {
         if (string.IsNullOrWhiteSpace(name) || name.Length > 256)
-            return false;
+            throw new DomainException("Name can't be empty or exceed 256 characters.");
 
         return true;
     }
     private static bool ValidatePrice(Money price)
     {
         if (price.Value < 0 || price.Currency.Length != 3)
-            return false;
+            throw new DomainException("Price can't be negative, currency code has to be 3 characters long.");
 
         return true;
     }
     private static bool ValidateStock(int stock)
     {
-        return stock < 0;
+        if (stock < 0)
+            throw new DomainException("Stock can't be negative.");
+        
+        return true;
     }
     private void Update()
     {
