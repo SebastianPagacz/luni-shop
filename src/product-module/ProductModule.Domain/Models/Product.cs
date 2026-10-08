@@ -1,7 +1,7 @@
 using ProductModule.Domain.Exceptions;
 using ProductModule.Domain.ValueObjects;
 
-namespace ProductModule.Domain.Model;
+namespace ProductModule.Domain.Models;
 
 public class Product
 {
@@ -23,6 +23,9 @@ public class Product
     public bool IsDeleted { get; private set; } = false;
     public DateTimeOffset CreatedAt { get; init; } = DateTimeOffset.UtcNow;
     public DateTimeOffset UpdatedAt { get; private set; }
+
+    public IReadOnlyCollection<Category> Categories => _categories;
+    private List<Category> _categories = new();
 
     public static Product Create(string name, string? description, Money price, int stock)
     {
