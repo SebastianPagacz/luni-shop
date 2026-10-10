@@ -12,12 +12,12 @@ public class CategoryRepository(AppDbContext context) : IRepository<Category>
         context.Categories.Add(item);
     }
 
-    public async Task<IEnumerable<Category>> GetAll(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Category>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         return await context.Categories.ToListAsync(cancellationToken);
     }
 
-    public async Task<Category> GetById(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Category> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await context.Categories.Where(category => category.Id == id).FirstOrDefaultAsync(cancellationToken);
     }

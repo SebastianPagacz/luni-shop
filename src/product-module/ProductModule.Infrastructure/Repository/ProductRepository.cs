@@ -12,12 +12,12 @@ public class ProductRepository(AppDbContext context) : IRepository<Product>
         context.Products.Add(item);
     }
 
-    public async Task<IEnumerable<Product>> GetAll(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         return await context.Products.ToListAsync(cancellationToken);
     }
 
-    public async Task<Product> GetById(Guid id, CancellationToken cancellationToken = default)
+    public async Task<Product> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await context.Products.Where(product => product.Id == id).FirstOrDefaultAsync(cancellationToken);
     }
