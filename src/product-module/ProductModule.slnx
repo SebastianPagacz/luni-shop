@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="ProductModule.Application/ProductModule.Application.csproj" />
   <Project Path="ProductModule.Domain/ProductModule.Domain.csproj" />
   <Project Path="ProductModule.Infrastructure/ProductModule.Infrastructure.csproj" />
 </Solution>
