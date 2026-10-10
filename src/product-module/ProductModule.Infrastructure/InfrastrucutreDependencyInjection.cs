@@ -16,6 +16,8 @@ public static class InfrastrucutreDependencyInjection
         services.AddScoped<IRepository<Product>, ProductRepository>();
         services.AddScoped<IRepository<Category>, CategoryRepository>();
 
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+
         return services;
     }
 }
