@@ -1,6 +1,6 @@
 @LuniShop.Bootstrapper_HostAddress = http://localhost:5157
 
-GET {{LuniShop.Bootstrapper_HostAddress}}/weatherforecast/
+GET {{LuniShop.Bootstrapper_HostAddress}}/health
 Accept: application/json
 
 ###
