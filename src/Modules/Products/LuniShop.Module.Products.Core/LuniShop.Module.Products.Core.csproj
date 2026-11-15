@@ -1,0 +1,5 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../../../Shared/LuniShop.Shared.Abstractions/LuniShop.Shared.Abstractions.csproj" />
+  </ItemGroup>
+</Project>
