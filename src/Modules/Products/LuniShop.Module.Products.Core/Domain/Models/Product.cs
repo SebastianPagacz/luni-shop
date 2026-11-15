@@ -1,7 +1,7 @@
-using LuniShop.Module.Products.Domain.Primitives;
+using LuniShop.Module.Products.Core.Domain.Primitives;
 using LuniShop.Shared.Abstractions.Results;
 
-namespace LuniShop.Module.Products.Domain.Models;
+namespace LuniShop.Module.Products.Core.Domain.Models;
 
 public class Product
 {
@@ -9,6 +9,9 @@ public class Product
     public string Name { get; private set; } = string.Empty;
     public Money Price { get; private set; }
     public int Stock { get; private set; }
+    // Relations
+    public IReadOnlyCollection<Category> Categories => _categories.AsReadOnly();
+    private readonly IList<Category> _categories = new List<Category>();
 
     private Product(string name, Money price, int stock)
     {
@@ -24,7 +27,7 @@ public class Product
 
         if(stock < 0)
             return Result.Failure<Product>("Stock can't be below 0");
-        
+
         return Result.Success(new Product(name, price, stock));
     }
     public Result<Product> SetName(string newName)

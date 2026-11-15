@@ -1,6 +1,6 @@
 using LuniShop.Shared.Abstractions.Results;
 
-namespace LuniShop.Module.Products.Domain.Primitives;
+namespace LuniShop.Module.Products.Core.Domain.Primitives;
 
 public record Money
 {
@@ -19,5 +19,5 @@ public record Money
             return Result.Failure<Money>("Amount can't be 0 or below.");
 
         return Result.Success(new Money(Math.Round(amount, 2, MidpointRounding.AwayFromZero), "PLN"));
-    } 
+    }
 }
