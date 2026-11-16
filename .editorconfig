@@ -13,6 +13,7 @@ tab_width = 4
 dotnet_style_namespace_match_folder = true
 dotnet_naming_style.pascal_case.capitalization = pascal_case
 dotnet_diagnostic.CA1716.severity = none
+dotnet_diagnostic.CS0746.severity = none
 
 dotnet_naming_rule.interface_should_be_begins_with_i.severity = suggestion
 dotnet_naming_rule.interface_should_be_begins_with_i.symbols = interface

@@ -16,8 +16,8 @@ public record Money
     public static Result<Money> CreatePln(decimal amount)
     {
         if (amount <= 0)
-            return Result.Failure<Money>("Amount can't be 0 or below.");
+            return ResultFactory.Failure<Money>("Amount can't be 0 or below.");
 
-        return Result.Success(new Money(Math.Round(amount, 2, MidpointRounding.AwayFromZero), "PLN"));
+        return ResultFactory.Success(new Money(Math.Round(amount, 2, MidpointRounding.AwayFromZero), "PLN"));
     }
 }

@@ -18,16 +18,16 @@ public class Category
     public static Result<Category> CreateCategory(string name)
     {
         if(string.IsNullOrWhiteSpace(name) || name.Length > 256)
-            return Result.Failure<Category>("Name can't be empty or exceed 256 characters.");
+            return ResultFactory.Failure<Category>("Name can't be empty or exceed 256 characters.");
 
-        return Result.Success(new Category(name));
+        return ResultFactory.Success(new Category(name));
     }
     public Result<Category> ChangeName(string newName)
     {
         if(string.IsNullOrWhiteSpace(newName) || newName.Length > 256)
-            return Result.Failure<Category>("Name can't be empty or exceed 256 characters.");
+            return ResultFactory.Failure<Category>("Name can't be empty or exceed 256 characters.");
 
         Name = newName;
-        return Result.Success(this);
+        return ResultFactory.Success(this);
     }
 }

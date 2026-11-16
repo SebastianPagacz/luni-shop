@@ -8,7 +8,7 @@ public sealed record Result<T>(T? Value, string? ErrorMessage)
     public bool IsSuccess => ErrorMessage is null && Value is not null;
 }
 
-public static class Result
+public static class ResultFactory
 {
     public static Result<T> Success<T>(T value) => new(value, null);
     public static Result<T> Failure<T>(string errorMessage) => new(default, errorMessage);
