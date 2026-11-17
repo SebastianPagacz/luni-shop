@@ -22,10 +22,7 @@ public static class PagedResultFactory
 {
     public static PagedResult<T> Create<T>(IList<T> values, int pageSize, int currentPage, int totalCount)
     {
-<<<<<<< HEAD
         if (pageSize < 0 || currentPage <= 0 || totalCount < 0)
-=======
->>>>>>> c9872cf (feat2 PagedResult, generic repository, small adjustments to the entities)
             return new PagedResult<T>(new List<T>(), 0, 0, 0); // For now empty result if data is invalid
 
         return new PagedResult<T>(values, pageSize, currentPage, totalCount);
