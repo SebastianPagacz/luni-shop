@@ -11,7 +11,7 @@ public class Product
     public int Stock { get; private set; }
     // Relations
     public IReadOnlyCollection<Category> Categories => _categories.AsReadOnly();
-    private readonly IList<Category> _categories = new List<Category>();
+    private readonly List<Category> _categories = new List<Category>();
 
     private Product(string name, Money price, int stock)
     {
@@ -50,5 +50,20 @@ public class Product
 
         Stock = newStock;
         return ResultFactory.Success(this);
+    }
+    public void AssignCategory(Category category)
+    {
+        if (_categories.Any(x => x.Id == category.Id))
+            return;
+
+        _categories.Add(category);
+    }
+
+    public void AssignCategories(IList<Category> categories)
+    {
+        foreach(Category category in categories)
+        {
+            AssignCategory(category);
+        }
     }
 }

@@ -20,11 +20,13 @@ public sealed record PagedResult<T>
 
 public static class PagedResultFactory
 {
-    public static PagedResult<T> Create<T>(IList<T> values, int pageSize, int currentPage, int totalCount)
+    public static PagedResult<T> Create<T>(IQueryable<T> values, int pageSize, int currentPage, int totalCount)
     {
         if (pageSize < 0 || currentPage <= 0 || totalCount < 0)
             return new PagedResult<T>(new List<T>(), 0, 0, 0); // For now empty result if data is invalid
 
-        return new PagedResult<T>(values, pageSize, currentPage, totalCount);
+        var materializedValue = values.Skip((currentPage - 1) * pageSize).Take(currentPage * pageSize).ToList();
+
+        return new PagedResult<T>(materializedValue, pageSize, currentPage, totalCount);
     }
 }

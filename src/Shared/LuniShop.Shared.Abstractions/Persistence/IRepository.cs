@@ -6,5 +6,5 @@ public interface IRepository<T>
 {
     void Add();
     Task<Result<T>> GetByIdAsync(Guid id);
-    Task<PagedResult<T>> GetAsync(Guid id);
+    Task<PagedResult<IList<T>>> GetAsync(int pageSize, int currentPage);
 }

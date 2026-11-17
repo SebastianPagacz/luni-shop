@@ -6,9 +6,6 @@ public class Category
 {
     public Guid Id { get; init; }
     public string Name { get; private set; } = string.Empty;
-    // Relations
-    public IReadOnlyCollection<Product> Products => _products.AsReadOnly();
-    private readonly IList<Product> _products = new List<Product>();
 
     private Category(string name)
     {
