@@ -20,12 +20,24 @@ public sealed record PagedResult<T>
 
 public static class PagedResultFactory
 {
+    /// <summary>
+    /// Create returns a PagedResult with a generic IList, using IQueryable as an entry value.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="values">IQueryable<T> parameter used to determine collection</param>
+    /// <param name="pageSize">Size of a single page</param>
+    /// <param name="currentPage">Number of current page starting from 1</param>
+    /// <param name="totalCount">Count of all results</param>
+    /// <returns></returns>
     public static PagedResult<T> Create<T>(IQueryable<T> values, int pageSize, int currentPage, int totalCount)
     {
         if (pageSize < 0 || currentPage <= 0 || totalCount < 0)
             return new PagedResult<T>(new List<T>(), 0, 0, 0); // For now empty result if data is invalid
 
-        var materializedValue = values.Skip((currentPage - 1) * pageSize).Take(currentPage * pageSize).ToList();
+        var materializedValue = values
+            .Skip((currentPage - 1) * pageSize)
+            .Take(currentPage * pageSize)
+            .ToList();
 
         return new PagedResult<T>(materializedValue, pageSize, currentPage, totalCount);
     }

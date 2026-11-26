@@ -4,7 +4,7 @@ namespace LuniShop.Shared.Abstractions.Persistence;
 
 public interface IRepository<T>
 {
-    void Add();
+    void Add(T item);
     Task<Result<T>> GetByIdAsync(Guid id);
-    Task<PagedResult<IList<T>>> GetAsync(int pageSize, int currentPage);
+    Task<PagedResult<T>> GetAsync(int pageSize, int currentPage);
 }
