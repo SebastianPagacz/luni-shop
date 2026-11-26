@@ -17,7 +17,11 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         builder
             .Property(x => x.Price.Amount)
-            .HasPrecision(8,2); // I'm not sure about mapping this via ORM
+            .HasPrecision(8,2);
+
+        builder
+            .Property(x => x.Price.Currency)
+            .HasMaxLength(3);
 
         builder
             .HasMany(x => x.Categories)
