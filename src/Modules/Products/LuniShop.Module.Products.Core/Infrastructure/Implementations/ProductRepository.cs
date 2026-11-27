@@ -18,22 +18,27 @@ public class ProductRepository : IRepository<Product>
         _context.Add(item); // Do I have to do it that way? I mean do I have to add "item" argument to the method?
     }
 
-    public async Task<PagedResult<Product>> GetAsync(int pageSize, int currentPage) // Right now this method is fully synchronus, I probably need to move pagination from the paged result to respective methods that are using paged result to make them trully async
+    public async Task<PagedResult<Product>> GetAsync(int pageSize, int currentPage, CancellationToken ct) // Right now this method is fully synchronus, I probably need to move pagination from the paged result to respective methods that are using paged result to make them trully async
     {
-        var products = _context
+        var products = await _context
             .Products
-            .AsQueryable();
+            .OrderBy(x => x.Name)
+            .Skip((currentPage - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(ct);
 
-        var totalProductsCount = _context
+        var totalProductsCount = await _context
             .Products
-            .Count();
+            .CountAsync(ct);
 
         return PagedResultFactory.Create(products, pageSize, currentPage, totalProductsCount);
     }
 
-    public async Task<Result<Product>> GetByIdAsync(Guid id)
+    public async Task<Result<Product>> GetByIdAsync(Guid id, CancellationToken ct)
     {
-        var product = await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
+        var product = await _context
+            .Products
+            .FirstOrDefaultAsync(x => x.Id == id, ct);
 
         if (product is not null)
             return ResultFactory.Success(product);
