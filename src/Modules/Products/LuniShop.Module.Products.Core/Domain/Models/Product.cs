@@ -1,0 +1,69 @@
+using LuniShop.Module.Products.Core.Domain.Primitives;
+using LuniShop.Shared.Abstractions.Results;
+
+namespace LuniShop.Module.Products.Core.Domain.Models;
+
+public class Product
+{
+    public Guid Id { get; init; }
+    public string Name { get; private set; } = string.Empty;
+    public Money Price { get; private set; }
+    public int Stock { get; private set; }
+    // Relations
+    public IReadOnlyCollection<Category> Categories => _categories.AsReadOnly();
+    private readonly List<Category> _categories = new List<Category>();
+
+    private Product(string name, Money price, int stock)
+    {
+        Name = name;
+        Price = price;
+        Stock = stock;
+    }
+
+    public static Result<Product> CreateProduct(string name, Money price, int stock)
+    {
+        if(string.IsNullOrWhiteSpace(name) || name.Length > 256)
+            return ResultFactory.Failure<Product>("Name can't be null, white space or exceed 256 characters.");
+
+        if(stock < 0)
+            return ResultFactory.Failure<Product>("Stock can't be below 0");
+
+        return ResultFactory.Success(new Product(name, price, stock));
+    }
+    public Result<Product> SetName(string newName)
+    {
+        if(string.IsNullOrWhiteSpace(newName) || newName.Length > 256)
+            return ResultFactory.Failure<Product>("Name can't be null, white space or exceed 256 characters.");
+
+        Name = newName;
+        return ResultFactory.Success(this);
+    }
+    public Result<Product> SetPrice(Money newPrice)
+    {
+        Price = newPrice;
+        return ResultFactory.Success(this);
+    }
+    public Result<Product> SetStock(int newStock)
+    {
+        if(newStock < 0)
+            return ResultFactory.Failure<Product>("Stock can't be below 0");
+
+        Stock = newStock;
+        return ResultFactory.Success(this);
+    }
+    public void AssignCategory(Category category)
+    {
+        if (_categories.Any(x => x.Id == category.Id))
+            return;
+
+        _categories.Add(category);
+    }
+
+    public void AssignCategories(IList<Category> categories)
+    {
+        foreach(Category category in categories)
+        {
+            AssignCategory(category);
+        }
+    }
+}

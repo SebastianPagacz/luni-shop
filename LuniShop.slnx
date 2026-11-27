@@ -3,4 +3,15 @@
   <Folder Name="/src/Bootstrapper/">
     <Project Path="src/Bootstrapper/LuniShop.Bootstrapper/LuniShop.Bootstrapper.csproj" />
   </Folder>
+  <Folder Name="/src/Modules/" />
+  <Folder Name="/src/Modules/Products/">
+    <Project Path="src/Modules/Products/LuniShop.Module.Products.Core/LuniShop.Module.Products.Core.csproj" />
+  </Folder>
+  <Folder Name="/src/Shared/">
+    <Project Path="src/Shared/LuniShop.Shared.Abstractions/LuniShop.Shared.Abstractions.csproj" />
+  </Folder>
+  <Folder Name="/tests/" />
+  <Folder Name="/tests/Modules/">
+    <Project Path="tests/Modules/LuniShop.Products.UnitTests/LuniShop.Products.UnitTests.csproj" />
+  </Folder>
 </Solution>
